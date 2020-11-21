@@ -38,7 +38,7 @@ collections:
     permalink: /:collection/:name
     
 # Disqus
-disqus_shortname: disqus
+disqus_shortname: girawhale-github-io
 
 # BUILD SETTINGS
 plugins: [jekyll-paginate, jekyll-seo-tag, jekyll-feed]

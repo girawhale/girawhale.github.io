@@ -50,19 +50,19 @@ h6 {
 }
 
 h1 {
-  font-size: 2.3em;
+  font-size: 2em;
 }
 
 h2 {
-  font-size: 1.75em;
-}
-
-h3 {
   font-size: 1.5em;
 }
 
+h3 {
+  font-size: 1.3em;
+}
+
 h4 {
-  font-size: 1.15em;
+  font-size: 1.1em;
 }
 
 iframe,
@@ -88,10 +88,10 @@ img[align=right] {
 
 @media screen and (max-width: $break) {
   h1 {
-    font-size: 2em;
+    font-size: 1.7em;
   }
   h2 {
-    font-size: 1.5em;
+    font-size: 1.4em;
   }
   h3 {
     font-size: 1em;
@@ -115,7 +115,7 @@ img[align=right] {
 
 @media screen and (max-width: $sm-break) {
   h1 {
-    font-size: 1.5em;
+    font-size: 1.44em;
   }
   h2 {
     font-size: 1em;

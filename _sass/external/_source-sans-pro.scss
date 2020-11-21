@@ -49,19 +49,19 @@ $ns-font-path: "../../assets/fonts/nanum-square" !default;
 @font-face {
   font-family: "NanumSquare";
   font-weight: 300;
-  src: local("NanumSquareL"), url(#{$ns-font-path}//NanumSquareL.ttf) format("truetype");
+  src: local("NanumSquareL"), url('#{$ns-font-path}/NanumSquareL.ttf') format("truetype");
 }
 
 @font-face {
   font-family: "NanumSquare";
   font-style: normal;
   font-weight: 400;
-  src: local("NanumSquareR"), url(#{$ns-font-path}//NanumSquareR.ttf) format("truetype");
+  src: local("NanumSquareR"), url('#{$ns-font-path}/NanumSquareR.ttf') format("truetype");
 }
 
 @font-face {
   font-family: "NanumSquare";
   font-weight: 500;
-  src: local("NanumSquareEB"), url(#{$ns-font-path}/NanumSquareEB.ttf) format("truetype");
+  src: local("NanumSquareEB"), url('#{$ns-font-path}/NanumSquareEB.ttf') format("truetype");
 }
 

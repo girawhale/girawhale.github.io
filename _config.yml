@@ -36,6 +36,9 @@ collections:
   portfolio:
     output: true
     permalink: /:collection/:name
+    
+# Disqus
+disqus_shortname: disqus
 
 # BUILD SETTINGS
 plugins: [jekyll-paginate, jekyll-seo-tag, jekyll-feed]

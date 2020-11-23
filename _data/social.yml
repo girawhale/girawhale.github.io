@@ -1,5 +1,5 @@
 # Icons on the footer
-rss: false
+rss: true
 email_address:    # Full email address, e.g. "sam@example.com"
 behance:
 bitbucket:

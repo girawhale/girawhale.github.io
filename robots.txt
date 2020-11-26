@@ -1,0 +1,3 @@
+ User-agent: *
+ Allow: /
+ Sitemap: https://girawhale.github.io/sitemap.xml

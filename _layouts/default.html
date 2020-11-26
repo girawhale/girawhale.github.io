@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<!--
-    Type on Strap jekyll theme v2.3.0
-    Copyright 2016-2020 Sylhare
-    Theme free for personal and commercial use under the MIT license
-    https://github.com/sylhare/Type-on-Strap/blob/master/LICENSE
--->
 <html lang="en">
-  {% include head.html %}
-  <body>
-    {% include navbar.html %}
-    <div class="content">
-      {{ content }}
-    </div>
+
+{% include head.html %}
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    {% include nav.html %}
+    {% include search.html %}
+
+    {{ content }}
+
     {% include footer.html %}
-  </body>
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
 </html>

@@ -1,82 +1,65 @@
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <!-- Main JS (navbar.js, katex_init.js and masonry_init.js)-->
-    <script defer src="{{ '/assets/js/main.min.js' | relative_url }}"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="{{ site.description }}">
+    <meta name="keywords"  content="{{ site.keyword }}">
+    <meta name="theme-color" content="{{ site.chrome-tab-theme-color }}">
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-
-    <!--Favicon-->
-    <link rel="shortcut icon" href="{{ site.favicon | relative_url }}" type="image/x-icon">
-
-    <!-- RSS -->
-    <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ 'feed.xml' | absolute_url }}"/>
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}">
+    {% case page.layout %}
+    {% when 'post' %}
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="{{ page.excerpt | strip_html | truncate:200 }}">
+    {% if page.date %}
+    <meta property="article:published_time" content="{{ page.date | date: "%Y-%m-%dT%H:%M:%SZ" }}">
+    {% endif %}
+    {% if page.author %}
+    <meta property="article:author" content="{{ page.author }}">
+    {% endif %}
+    {% for tag in page.tags %}
+    <meta property="article:tag" content="{{ tag }}">
+    {% endfor %}
+    {% else %}
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    {% endcase %}
+    <meta property="og:image" content="{{ site.url }}{{ site.sidebar-avatar }}">
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    <meta property="og:site_name" content="{{ site.SEOTitle }}">
     
-    {% if page.bootstrap %}
-    <!-- Bootstrap-4.1.3 isolation CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/vendor/bootstrap-iso.min.css' | relative_url }}">
-    <!-- JQuery 3.3.1 -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Bootstrap 4.1.3 compiled and minified JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <!-- Popper, a dependency of Bootstrap-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    {% endif %}
+    <title>{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}</title>
 
-    <!-- KaTeX 0.12.0 -->
-    {% if site.katex or site.theme_settings.katex %}
-    <script defer src="{{ '/assets/js/vendor/katex.min.js' | relative_url }}"></script>
-    <script defer src="{{ '/assets/js/vendor/auto-render.min.js' | relative_url }}" onload="renderMathInElement(document.body);"></script>
-    {% endif %}
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ site.baseurl }}/pwa/manifest.json">
 
-    <!-- Mermaid 8.8.2 -->
-    {% if site.mermaid %}
-    <!-- <script src=”https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.8.2/mermaid.min.js" onload="mermaid.initialize({startOnLoad:true});"></script> -->
-    <script defer src="{{ '/assets/js/vendor/mermaid.min.js' | relative_url }}" onload="mermaid.initialize({startOnLoad:true});"></script>
-    {% endif %}
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ site.baseurl }}/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
-    <!-- Simple-Jekyll-Search 1.17.12 -->
-    <script src="{{ '/assets/js/vendor/simple-jekyll-search.min.js' | relative_url }}" type="text/javascript"></script>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
 
-    <!-- Google Analytics / Cookie Consent -->
-    <script>
-      const cookieName = 'cookie-notice-dismissed-{{ site.url }}';
-      const isCookieConsent = '{{ site.cookie_consent }}';
-      const analyticsName = '{{ site.google_analytics }}';
-    </script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ "/css/hux-blog.min.css" | prepend: site.baseurl }}">
 
-    {% if site.cookie_consent %}
-        <div id="cookie-notice"><span>{{ site.data.language.str_cookie_disclaimer | default: "We would like to use third party cookies and scripts to improve the functionality of this website." }}
-          </span><a id="cookie-notice-accept" class="button">{{ site.data.language.str_cookie_approve | default: "Approve" }}</a>
-        </div>
-    {% endif %}
-    {% if site.google_analytics %}
-        <!-- Global site tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
-        <!-- Page analysis (analytics.js) -->
-        <script async src='https://www.google-analytics.com/analytics.js'></script>
-    {% endif %}
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- seo tags -->
-    <meta property="og:image" content="{{ '/' | absolute_url }}{% if page.thumbnail %}{{ page.thumbnail }}{% else %}{{ page.feature-img | default: site.header_feature_image }}{% endif %}">
-    {% unless page.layout == post %}
-    <meta property="og:type" content="website" />
-    {% endunless %}
-    {% seo %}
 
-    <!-- RSS -->
-    {% feed_meta %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-    <!-- Twitter Cards -->
-    <meta name="twitter:title" content="{{ page.title | default: site.title }}">
-    <meta name="twitter:description" content="{{ page.content | strip_html | strip_newlines | truncate: 160 | default: site.header_text}}">
-    {% if site.data.social.twitter %}
-    <meta name="twitter:creator" content="@{{ site.data.social.twitter }}">
-    <meta name="twitter:site" content="@{{ site.data.social.twitter }}">
-    {% endif %}
-    <meta name="twitter:card" content="{% unless page.thumbnail %}summary{% else %}summary_large_image{% endunless %}">
-    <meta name="twitter:image" content="{{ '/' | absolute_url }}{% if page.thumbnail %}{{ page.thumbnail }}{% else %}{{ page.feature-img | default: site.header_feature_image }}{% endif %}">
-    <meta name="twitter:image:alt" content="{{ page.title | default: site.title }}">
+    <!-- ga & ba script hoook -->
+    <script></script>
 </head>

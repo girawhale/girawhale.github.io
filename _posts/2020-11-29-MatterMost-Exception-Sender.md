@@ -140,6 +140,34 @@ notification:
 
 
 
+###  MatterMostProperties
+
+``` java
+@Component
+@Getter
+@Setter
+@ConfigurationProperties("notification.mattermost")
+@Primary
+public class MattermostProperties {
+
+	private String channel;
+	private String pretext;
+	private String color = "#ff5d52";
+	private String authorName;
+	private String authorIcon;
+	private String title;
+	private String text = "";
+	private String footer = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+}
+```
+
+Application Properties에 등록한 값을 받아올 `MatterMostProperties` 객체를 만들었다.
+
+만약 default값을 설정하고 싶다면 이 곳에 추가하면 된다!
+
+
+
 ### MatterMostMessageDTO
 
 ``` java
@@ -313,15 +341,15 @@ public class MatterMostSender {
 		
 		try {
 			Attachment attachment = Attachment.builder()
-                                        .channel(mmProperties.getChannel())
-                                        .authorIcon(mmProperties.getAuthorIcon())
-                                        .authorName(mmProperties.getAuthorName())
-                                        .color(mmProperties.getColor())
-                                        .pretext(mmProperties.getPretext())
-                                        .title(mmProperties.getTitle())
-                                        .text(mmProperties.getText())
-                                        .footer(mmProperties.getFooter())
-                                        .build();
+                                                .channel(mmProperties.getChannel())
+                                                .authorIcon(mmProperties.getAuthorIcon())
+                                                .authorName(mmProperties.getAuthorName())
+                                                .color(mmProperties.getColor())
+                                                .pretext(mmProperties.getPretext())
+                                                .title(mmProperties.getTitle())
+                                                .text(mmProperties.getText())
+                                                .footer(mmProperties.getFooter())
+                                                .build();
 			
 			attachment.addExceptionInfo(excpetion, uri, params);
 			Attachments attachments = new Attachments(attachment);
@@ -342,6 +370,8 @@ public class MatterMostSender {
 ```
 
 전달 받을 메세지를 보내게 될 객체이다
+
+mmProperties를 통해 등록된 값을 Attachments객체를 만들어 주고 Exception을 통해 전달된 값들을 통해 메세지 객체를 생성한다
 
 MatterMost Webhook을 통해 MatterMost에 직접 메세지를 보내게 된다
 

@@ -12,11 +12,11 @@ tags: [MatterMost, Webhook, Spring]
 
 이전까지는 팀으로 프로젝트를 진행할 때 기능별로 분류를 했었는데, Spring을 모르는 팀원과 같이 프로젝트를 진행하게 되어 역할 분담을 프론트엔드와 백엔드로 나눠 진행하게 되었다.
 
-#### ㅤ
+
 
 그러다보니 프로젝트에서 발생한 에러를 수정하기 위해 로그를 보기 어려웠다. 그러다 컨설턴트님께서 사용하고 있는 MatterMost를 통해 에러를 받아볼 수 있다는 것을 알려주시게 되어 제작을 해보게 되었다.
 
-#### ㅤ
+
 
 기본적으로 Message Template 중 Attachments의 디자인이 가장 마음에 들어 해당 형식으로 작성하기로 했다.ㅤ
 
@@ -28,31 +28,31 @@ tags: [MatterMost, Webhook, Spring]
 
 ![image](https://user-images.githubusercontent.com/915956/64055959-ec0cfe80-cb44-11e9-8ee3-b64d47c86032.png)
 
-#### ㅤ
+
 
 ## 사전 설정
 
 ### MatterMost Webhook 설정
 
-![img1](..\img\in-post\mattermost-exception-sender\img1.PNG)
+![img1](/img/in-post/mattermost-exception-sender/img1.PNG)
 
 [메뉴] > [통합] 을 선택하고 [전체 Incoming Webhook]을 클릭한다
 
-#### ㅤ
 
-![img2](..\img\in-post\mattermost-exception-sender\img2.PNG)
 
-![img3](..\img\in-post\mattermost-exception-sender\img3.PNG)
+![img2](/img/in-post/mattermost-exception-sender/img2.PNG)
+
+![img3](/img/in-post/mattermost-exception-sender/img3.PNG)
 
 [Incoming Webhook 추가하기] 버튼을 눌러 설정한 뒤 저장
 
-#### ㅤ
 
-![img4](..\img\in-post\mattermost-exception-sender\img4.PNG)
+
+![img4](/img/in-post/mattermost-exception-sender/img4.PNG)
 
 그러면 결과로 URL이 나오게 되는데 해당 URL을 통해 MatterMost에 Webhook을 보낼 준비를 마치게 된다.
 
-#### ㅤ
+
 
 ## Spring 준비하기
 
@@ -78,7 +78,7 @@ tags: [MatterMost, Webhook, Spring]
 
 
 
-#### ㅤ
+
 
 ### ControllerAdvice
 
@@ -101,7 +101,7 @@ public class GrobalControllerAdvice {
 		Enumeration<String> keys = req.getParameterNames();
 		while (keys.hasMoreElements()) {
 			String key = keys.nextElement();
-			params.append("- ").append(key).append(" : ").append(req.getParameter(key)).append('\n');
+			params.append("- ").append(key).append(" : ").append(req.getParameter(key)).append('/n');
 		}
 
 		return params.toString();
@@ -112,8 +112,6 @@ public class GrobalControllerAdvice {
 각 Controller에서 처리하지 못한 에러들을 모아서 에러를 받아줄 `ControllerAdvice`객체를 만든다
 
 에러가 발생했을 때 파악하기 쉽도록 에러가 발생한 URL과 Parameter들도 함께 받기 위해 `NotificationManager`에 이것들을 함께 보내준다
-
-#### ㅤ
 
 
 
@@ -139,8 +137,6 @@ notification:
 이외에도 설정할 수 있는 다양한 부분이 있지만, 적용이 되지 않거나 나에게는 필요하지 않아 제거한 부분이 많다...
 
 만약 추가하고 싶다면 [MatterMost Docs](https://docs.mattermost.com/developer/message-attachments.html#)를 참조해서 추가로 넣으면 될 것 같다
-
-#### ㅤ
 
 
 
@@ -200,8 +196,8 @@ public class MatterMostMessageDto {
 			this.title = e.getClass().getSimpleName();
 			StringBuilder sb = new StringBuilder(text);
 
-			sb.append("**Error Message**").append('\n').append('\n').append("```").append(e.getMessage()).append("```")
-					.append('\n').append('\n');
+			sb.append("**Error Message**").append('/n').append('/n').append("```").append(e.getMessage()).append("```")
+					.append('/n').append('/n');
 
 			this.text = sb.toString();
 
@@ -212,7 +208,7 @@ public class MatterMostMessageDto {
 			this.addExceptionInfo(e);
 			StringBuilder sb = new StringBuilder(text);
 
-			sb.append("**Reqeust URL**").append('\n').append('\n').append(uri).append('\n').append('\n');
+			sb.append("**Reqeust URL**").append('/n').append('/n').append(uri).append('/n').append('/n');
 
 			this.text = sb.toString();
 			return this;
@@ -222,7 +218,7 @@ public class MatterMostMessageDto {
 			this.addExceptionInfo(e, uri);
 			StringBuilder sb = new StringBuilder(text);
 
-			sb.append("**Parameters**").append('\n').append('\n').append(params.toString()).append('\n').append('\n');
+			sb.append("**Parameters**").append('/n').append('/n').append(params.toString()).append('/n').append('/n');
 
 			this.text = sb.toString();
 			return this;
@@ -240,9 +236,9 @@ public class MatterMostMessageDto {
 
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));
-			text.append("**Stack Trace**").append("\n").append('\n').append("```");
+			text.append("**Stack Trace**").append("/n").append('/n').append("```");
 			text.append(sw.toString().substring(0,
-					Math.min(5500, sw.toString().length())) + "\n...").append('\n').append('\n');
+					Math.min(5500, sw.toString().length())) + "/n...").append('/n').append('/n');
 
 			this.card = text.toString();
 		}
@@ -258,13 +254,11 @@ public class MatterMostMessageDto {
 
 전체 메세지가 8000자..? 정도의 제한 때문에 Props때문에 메인 메세지가 잘리는 경우가 생겨 substring을 활용해 길이를 잘라주었다
 
-#### ㅤ
+
 
 만약 Slack에 메세지를 보내고 싶다면 마크다운 형태를 변경하면 된다
 
 MM에서의 Bold는 `**TEXT**`이지만 Slack은 `*TEXT*`이므로 하나씩 제거하고, Props가 지원되지 않아 다른 형태로 바꿔주면 될 것 같다
-
-#### ㅤ
 
 
 
@@ -296,8 +290,6 @@ MatterMost에 메세지를 보내기위해 `MatterMostSender`를 등록해준다
 테스트 해보았을 때 Slack도 조금 변경하면 사용가능했으므로 Slack을 사용하실 분들은 `SlackSender`를 등록해두 될 것 같다
 
 
-
-#### ㅤ
 
 ### MatterMostSender
 
@@ -353,34 +345,29 @@ public class MatterMostSender {
 
 MatterMost Webhook을 통해 MatterMost에 직접 메세지를 보내게 된다
 
-#### ㅤ
-
 
 
 ## 결과
 
-![result](..\img\in-post\mattermost-exception-sender\result.PNG)
+![result](/img/in-post/mattermost-exception-sender/result.PNG)
 
 만약 성공적으로 작성되었다면 위와 같은 메세지가 도착하게 된다
 
 또한 ⓘ버튼을 누르게 된다면
 
-#### ㅤ
 
-![result-card](..\img\in-post\mattermost-exception-sender\result-card.PNG)
+
+![result-card](/img/in-post/mattermost-exception-sender/result-card.PNG)
 
 다음 카드가 등장하게 된다
 
-#### ㅤ
 
-
-#### ㅤ
 
 #### Github 소스보기
 
 [**링크**](https://github.com/girawhale/mattermost-exception-sender)
 
-#### ㅤ
+
 
 
 
@@ -388,6 +375,6 @@ ___
 
 ### REFERENCE
 
-> https://toma0912.tistory.com/95
+> [https://toma0912.tistory.com/95](https://toma0912.tistory.com/95)
 >
-> https://cheese10yun.github.io/slack-bot-spring
+> [https://cheese10yun.github.io/slack-bot-spring](https://cheese10yun.github.io/slack-bot-spring)

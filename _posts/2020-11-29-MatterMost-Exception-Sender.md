@@ -132,9 +132,7 @@ notification:
     footer: # attachment에 하단에 나올 부분. default=현재 시간
 ```
 
-메세지를 보내기 위해 Webhook 등과 기본설정들을 등록할 Application Properties에 작성해 두었다
-
-이외에도 설정할 수 있는 다양한 부분이 있지만, 적용이 되지 않거나 나에게는 필요하지 않아 제거한 부분이 많다...
+메세지를 보내기 위해 Webhook 등과 기본설정들을 등록할 Application Properties에 작성해 두었다. 이외에도 설정할 수 있는 다양한 부분이 있지만, 적용이 되지 않거나 나에게는 필요하지 않아 제거한 부분이 많다...
 
 만약 추가하고 싶다면 [MatterMost Docs](https://docs.mattermost.com/developer/message-attachments.html#)를 참조해서 추가로 넣으면 될 것 같다
 
@@ -162,9 +160,7 @@ public class MattermostProperties {
 }
 ```
 
-Application Properties에 등록한 값을 받아올 `MatterMostProperties` 객체를 만들었다.
-
-만약 default값을 설정하고 싶다면 이 곳에 추가하면 된다!
+Application Properties에 등록한 값을 받아올 `MatterMostProperties` 객체를 만들었다. 만약 default값을 설정하고 싶다면 이 곳에 추가하면 된다!
 
 
 
@@ -276,17 +272,13 @@ public class MatterMostMessageDto {
 
 ```
 
-메세지를 전달할 DTO객체를 만들어 주었다
-
-제일 큰 틀인 Attachments에 Attachment와 Props를 넣어주는 형식으로 작성하였다
+메세지를 전달할 DTO객체를 만들어 주었다. 제일 큰 틀인 Attachments에 Attachment와 Props를 넣어주는 형식으로 작성하였다
 
 전체 메세지가 8000자..? 정도의 제한 때문에 Props때문에 메인 메세지가 잘리는 경우가 생겨 substring을 활용해 길이를 잘라주었다
 
 
 
-만약 Slack에 메세지를 보내고 싶다면 마크다운 형태를 변경하면 된다
-
-MM에서의 Bold는 `**TEXT**`이지만 Slack은 `*TEXT*`이므로 하나씩 제거하고, Props가 지원되지 않아 다른 형태로 바꿔주면 될 것 같다
+만약 Slack에 메세지를 보내고 싶다면 마크다운 형태를 변경하면 된다. MM에서의 Bold는 `**TEXT**`이지만 Slack은 `*TEXT*`이므로 하나씩 제거하고, Props가 지원되지 않아 다른 형태로 바꿔주면 될 것 같다
 
 
 
@@ -311,9 +303,7 @@ public class NotificationManager {
 }
 ```
 
-확장성을 위해 `NotificationManager`객체를 만들어 주었다
-
-MatterMost에 메세지를 보내기위해 `MatterMostSender`를 등록해준다
+확장성을 위해 `NotificationManager`객체를 만들어 주었다. MatterMost에 메세지를 보내기위해 `MatterMostSender`를 등록해준다
 
 테스트 해보았을 때 Slack도 조금 변경하면 사용가능했으므로 Slack을 사용하실 분들은 `SlackSender`를 등록해두 될 것 같다
 
@@ -332,7 +322,7 @@ public class MatterMostSender {
 	@Value("${notification.mattermost.webhook-url}")
 	private String webhookUrl;	
 
-    private final RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
 	private final MattermostProperties mmProperties;
 	
 	public void sendMessage(Exception excpetion, String uri, String params) {
@@ -341,15 +331,15 @@ public class MatterMostSender {
 		
 		try {
 			Attachment attachment = Attachment.builder()
-                                                .channel(mmProperties.getChannel())
-                                                .authorIcon(mmProperties.getAuthorIcon())
-                                                .authorName(mmProperties.getAuthorName())
-                                                .color(mmProperties.getColor())
-                                                .pretext(mmProperties.getPretext())
-                                                .title(mmProperties.getTitle())
-                                                .text(mmProperties.getText())
-                                                .footer(mmProperties.getFooter())
-                                                .build();
+	                                                .channel(mmProperties.getChannel())
+	                                                .authorIcon(mmProperties.getAuthorIcon())
+	                                                .authorName(mmProperties.getAuthorName())
+	                                                .color(mmProperties.getColor())
+	                                                .pretext(mmProperties.getPretext())
+	                                                .title(mmProperties.getTitle())
+	                                                .text(mmProperties.getText())
+	                                                .footer(mmProperties.getFooter())
+	                                                .build();
 			
 			attachment.addExceptionInfo(excpetion, uri, params);
 			Attachments attachments = new Attachments(attachment);
@@ -369,11 +359,9 @@ public class MatterMostSender {
 	}
 ```
 
-전달 받을 메세지를 보내게 될 객체이다
+전달 받을 메세지를 보내게 될 객체이다. mmProperties를 통해 등록된 값을 Attachments객체를 만들어 주고 Exception을 통해 전달된 값들을 통해 메세지 객체를 생성한다.
 
-mmProperties를 통해 등록된 값을 Attachments객체를 만들어 주고 Exception을 통해 전달된 값들을 통해 메세지 객체를 생성한다
-
-MatterMost Webhook을 통해 MatterMost에 직접 메세지를 보내게 된다
+MatterMost Webhook을 통해 MatterMost에 직접 메세지를 보내게 된다.
 
 
 
@@ -381,9 +369,9 @@ MatterMost Webhook을 통해 MatterMost에 직접 메세지를 보내게 된다
 
 ![result](/img/in-post/mattermost-exception-sender/result.PNG)
 
-만약 성공적으로 작성되었다면 위와 같은 메세지가 도착하게 된다
+성공적으로 작성되었다면 위와 같은 메세지가 도착하게 된다.
 
-또한 ⓘ버튼을 누르게 된다면
+또한 ⓘ버튼을 누르게 된다면,
 
 
 
@@ -408,3 +396,5 @@ ___
 > [https://toma0912.tistory.com/95](https://toma0912.tistory.com/95)
 >
 > [https://cheese10yun.github.io/slack-bot-spring](https://cheese10yun.github.io/slack-bot-spring)
+>
+> [https://docs.mattermost.com/developer/message-attachments.html](https://docs.mattermost.com/developer/message-attachments.html)
